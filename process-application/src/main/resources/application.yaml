@@ -1,0 +1,30 @@
+# https://docs.camunda.io/docs/apis-tools/spring-zeebe-sdk/getting-started/
+# https://docs.camunda.io/docs/apis-tools/spring-zeebe-sdk/configuration/
+
+server:
+  port: 8081
+
+camunda:
+  client:
+    mode: saas
+    auth:
+      client-id: ${CLIENT_ID}
+      client-secret: ${CLIENT_SECRET}
+    cloud:
+      cluster-id: ${CLUSTER_ID}
+      region: ${REGION}
+
+dev:
+  bpm-crafters:
+    process-api:
+      adapter:
+        c8:
+          enabled: true
+          service-tasks:
+            delivery-strategy: subscription
+            worker-id: example-worker
+          user-tasks:
+            delivery-strategy: subscription_refreshing
+            completion-strategy: job
+            schedule-delivery-fixed-rate-in-seconds: 5
+            tasklist-url: https://${zeebe.client.region}.tasklist.camunda.io/${zeebe.client.clusterId}

@@ -1,0 +1,11 @@
+POST http://127.0.0.1:8081/rest/process/start
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "jane.doe@gmail.com",
+  "dateFrom": "2025-01-01",
+  "dateTo": "2025-02-01",
+  "cost": 2000,
+  "destination": "Hamburg"
+}
