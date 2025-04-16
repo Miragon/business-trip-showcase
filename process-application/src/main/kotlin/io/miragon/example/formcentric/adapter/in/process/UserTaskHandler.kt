@@ -27,6 +27,7 @@ val mapper = jacksonObjectMapper().apply {
 }
 
 @Component
+@Suppress("unused")
 class UserTaskHandler() {
     lateinit var sendMailUseCase: SendMailUseCase
 
