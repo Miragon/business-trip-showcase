@@ -2,7 +2,11 @@
 
 ## Prozess
 
-![dienstreisenantrag.svg](process-application/src/main/resources/Dienstreisenantrag.svg)
+![dienstreisenantrag.svg](docs/Dienstreisenantrag.svg)
+
+## Architektur
+
+![architecture.png](docs/architecture.excalidraw.png)
 
 ## Ablauf
 
