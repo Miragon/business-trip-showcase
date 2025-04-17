@@ -16,7 +16,6 @@ class UserTaskSupportConfiguration {
             taskSubscriptionApi,
             CommonRestrictions
                 .builder()
-                .withProcessDefinitionKey("Dienstreisenantrag")
                 .build(),
             null,
             null,

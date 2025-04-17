@@ -60,7 +60,7 @@ class UserTaskHandler() {
                 null,
                 { taskInfo, variables ->
                     if (!handledUserTasks.contains(taskInfo.taskId)) {
-                        log.info { "TaskHandler received task ${taskInfo.taskId} with meta ${taskInfo.meta}." }
+                        log.info { "[TaskHandler] received task ${taskInfo.taskId} with meta ${taskInfo.meta}." }
                         try {
                             val request = mapper.convertValue(variables["request"], BusinessTripRequest::class.java)
                             sendMailUseCase.sendMail(request.email, taskInfo.taskId)
@@ -73,8 +73,9 @@ class UserTaskHandler() {
                     }
                 },
                 TaskTerminationHandler { taskInfo ->
+                    log.info { "[TaskHandler] task $taskInfo terminated." }
                     // Remove the task if it gets terminated.
-                    this.handledUserTasks.remove(taskInfo.taskId)
+                    // handledUserTasks.remove(taskInfo.taskId)
                 }
             )
         ).get()

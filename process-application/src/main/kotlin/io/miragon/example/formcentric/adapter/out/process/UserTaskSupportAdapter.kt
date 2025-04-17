@@ -8,7 +8,8 @@ import org.springframework.stereotype.Component
 class UserTaskSupportAdapter(
     private val userTaskSupport: UserTaskSupport,
 ) : TaskDataPort {
-    override fun getData(taskId: String): Map<String, Any> {
-        return userTaskSupport.getPayload(taskId)
+    override fun getData(taskId: String): Map<String, Any>? {
+        val data = userTaskSupport.getPayload(taskId) as Map<String, Map<String, Any>>
+        return data["request"]
     }
 }
