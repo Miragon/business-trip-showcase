@@ -1,0 +1,136 @@
+{
+  "schema": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "title": "Name",
+        "description": "The name of the applicant"
+      },
+      "control2": {
+        "type": "string",
+        "title": "Email",
+        "description": "The email of the approver.",
+        "format": "email"
+      },
+      "dateTo": {
+        "type": "string",
+        "title": "Bis",
+        "format": "date"
+      },
+      "dateFrom": {
+        "type": "string",
+        "title": "Von",
+        "format": "date"
+      },
+      "cost": {
+        "type": "integer",
+        "title": "Kosten"
+      },
+      "destination": {
+        "type": "string",
+        "title": "Ziel"
+      },
+      "comment": {
+        "type": "string",
+        "title": "Kommentar"
+      },
+      "approval": {
+        "type": "boolean",
+        "title": "Genehmigung"
+      }
+    },
+    "required": [
+      "approval"
+    ],
+    "if": {
+      "properties": {
+        "approval": {
+          "const": true
+        }
+      }
+    },
+    "then": {
+      "required": [
+        "comment"
+      ]
+    }
+  },
+  "uischema": {
+    "type": "VerticalLayout",
+    "elements": [
+      {
+        "type": "Control",
+        "scope": "#/properties/name",
+        "label": "Name",
+        "options": {
+          "readonly": true
+        }
+      },
+      {
+        "type": "Control",
+        "scope": "#/properties/control2",
+        "label": "Email",
+        "options": {
+          "readonly": true
+        }
+      },
+      {
+        "type": "HorizontalLayout",
+        "elements": [
+          {
+            "type": "Control",
+            "scope": "#/properties/dateFrom",
+            "label": "Von",
+            "options": {
+              "readonly": true
+            }
+          },
+          {
+            "type": "Control",
+            "scope": "#/properties/dateTo",
+            "label": "Bis",
+            "options": {
+              "readonly": true
+            }
+          }
+        ]
+      },
+      {
+        "type": "Control",
+        "scope": "#/properties/cost",
+        "label": "Kosten",
+        "options": {
+          "readonly": true
+        }
+      },
+      {
+        "type": "Control",
+        "scope": "#/properties/destination",
+        "label": "Ziel",
+        "options": {
+          "readonly": true
+        }
+      },
+      {
+        "type": "Control",
+        "scope": "#/properties/approval",
+        "label": "Genehmigung"
+      },
+      {
+        "type": "Control",
+        "scope": "#/properties/comment",
+        "label": "Kommentar",
+        "rule": {
+          "effect": "SHOW",
+          "condition": {
+            "scope": "#/properties/approval",
+            "schema": {
+              "const": true
+            }
+          }
+        }
+      }
+    ]
+  }
+}

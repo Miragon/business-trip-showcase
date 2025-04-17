@@ -17,7 +17,7 @@ class DataService(
 
     private val jsonSchema = "Dienstreisenantrag.schema.json"
 
-    private val uiSchema = "Dienstreisenantrag.ui.json"
+    private val uiSchema = "Dienstreisenantrag.uischema.json"
 
     override fun getFormData(): JsonForm {
         val schemaResource = ClassPathResource(jsonSchema)
