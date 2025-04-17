@@ -2,7 +2,7 @@
 
 ## Prozess
 
-<img src="process-application/src/main/resources/Dienstreisenantrag.svg" alt="dienstreisenantrag" style="background-color: white">
+![dienstreisenantrag.svg](process-application/src/main/resources/Dienstreisenantrag.svg)
 
 ## Ablauf
 
