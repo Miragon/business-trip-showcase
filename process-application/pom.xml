@@ -43,7 +43,12 @@
         <dependency>
             <groupId>dev.bpm-crafters.process-engine-api</groupId>
             <artifactId>process-engine-api</artifactId>
-            <version>0.2.0</version>
+            <version>1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>dev.bpm-crafters.process-engine-api</groupId>
+            <artifactId>process-engine-api-impl</artifactId>
+            <version>1.1</version>
         </dependency>
         <dependency>
             <groupId>dev.bpm-crafters.process-engine-adapters</groupId>
