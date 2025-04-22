@@ -6,7 +6,7 @@
             "title": "Name",
             "description": "The name of the applicant"
         },
-        "control2": {
+        "email": {
             "type": "string",
             "title": "Email",
             "description": "The email of the approver.",
@@ -45,7 +45,7 @@
     "if": {
         "properties": {
             "approval": {
-                "const": true
+                "const": false
             }
         }
     },

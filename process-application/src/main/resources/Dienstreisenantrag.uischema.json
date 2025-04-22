@@ -11,7 +11,7 @@
         },
         {
             "type": "Control",
-            "scope": "#/properties/control2",
+            "scope": "#/properties/email",
             "label": "Email",
             "options": {
                 "readonly": true
@@ -68,7 +68,7 @@
                 "condition": {
                     "scope": "#/properties/approval",
                     "schema": {
-                        "const": true
+                        "const": false
                     }
                 }
             }
