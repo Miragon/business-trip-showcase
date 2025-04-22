@@ -1,5 +1,20 @@
 # Formcentric Showcase
 
+## Getting started
+
+1. Start the backend
+   ```shell
+   cd process-application
+   export $(grep -v '^#' src/main/resources/.env | xargs) && mvn spring-boot:run
+   ```
+
+2. Start the frontend
+   ```shell
+   cd frontend
+   yarn
+   yarn serve
+   ```
+
 ## Prozess
 
 ![dienstreisenantrag.svg](docs/Dienstreisenantrag.svg)
