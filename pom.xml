@@ -27,7 +27,9 @@
         <spring.boot.version>3.4.4</spring.boot.version>
         <!-- camunda -->
         <camunda.version>8.7.1</camunda.version>
-        <camunda.spring.version>8.5.18</camunda.spring.version>
+        <camunda.tasklist.version>8.7.0</camunda.tasklist.version>
+        <!-- process engine api -->
+        <process.engine.api.version>1.1</process.engine.api.version>
         <!-- project -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -70,15 +72,24 @@
             <!-- camunda -->
             <dependency>
                 <groupId>io.camunda</groupId>
-                <artifactId>zeebe-bom</artifactId>
+                <artifactId>spring-boot-starter-camunda-sdk</artifactId>
                 <version>${camunda.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
             </dependency>
             <dependency>
-                <groupId>io.camunda.spring</groupId>
-                <artifactId>spring-boot-starter-camunda</artifactId>
-                <version>${camunda.spring.version}</version>
+                <groupId>io.camunda</groupId>
+                <artifactId>camunda-tasklist-client-java</artifactId>
+                <version>${camunda.tasklist.version}</version>
+            </dependency>
+            <!-- process engine api -->
+            <dependency>
+                <groupId>dev.bpm-crafters.process-engine-api</groupId>
+                <artifactId>process-engine-api</artifactId>
+                <version>${process.engine.api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dev.bpm-crafters.process-engine-api</groupId>
+                <artifactId>process-engine-api-impl</artifactId>
+                <version>${process.engine.api.version}</version>
             </dependency>
             <!-- etc -->
             <dependency>

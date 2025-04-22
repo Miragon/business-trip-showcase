@@ -29,26 +29,23 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
         <dependency>
             <groupId>io.camunda</groupId>
             <artifactId>spring-boot-starter-camunda-sdk</artifactId>
-            <version>8.7.1</version>
         </dependency>
         <dependency>
             <groupId>io.camunda</groupId>
             <artifactId>camunda-tasklist-client-java</artifactId>
-            <version>8.7.0</version>
         </dependency>
 
         <dependency>
             <groupId>dev.bpm-crafters.process-engine-api</groupId>
             <artifactId>process-engine-api</artifactId>
-            <version>1.1</version>
         </dependency>
         <dependency>
             <groupId>dev.bpm-crafters.process-engine-api</groupId>
             <artifactId>process-engine-api-impl</artifactId>
-            <version>1.1</version>
         </dependency>
         <dependency>
             <groupId>dev.bpm-crafters.process-engine-adapters</groupId>
@@ -91,7 +88,6 @@
                 <artifactId>kotlin-maven-plugin</artifactId>
                 <configuration>
                     <compilerPlugins>
-                        <plugin>jpa</plugin>
                         <plugin>spring</plugin>
                     </compilerPlugins>
                     <args>
@@ -104,6 +100,14 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-maven-plugin</artifactId>
+                <configuration>
+                    <apiDocsUrl>http://localhost:8081/v3/api-docs</apiDocsUrl>
+                    <outputDir>${project.build.directory}</outputDir>
+                </configuration>
             </plugin>
         </plugins>
     </build>

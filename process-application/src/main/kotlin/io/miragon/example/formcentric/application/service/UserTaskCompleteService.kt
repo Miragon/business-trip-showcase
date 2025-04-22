@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 class UserTaskCompleteService(
     private val userTaskCompletionPort: UserTaskCompletionPort
 ) : CompleteUserTaskUseCase {
-    override fun complete(taskId: String, request: BusinessTripRequest) {
-        this.userTaskCompletionPort.complete(taskId, request.approval)
+    override fun complete(taskId: String, request: BusinessTripRequest): Boolean {
+        return this.userTaskCompletionPort.complete(taskId, request.approval)
     }
 }

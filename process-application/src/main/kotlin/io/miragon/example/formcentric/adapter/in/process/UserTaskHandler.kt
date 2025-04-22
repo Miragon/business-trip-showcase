@@ -11,6 +11,7 @@ import dev.bpmcrafters.processengineapi.task.TaskSubscriptionApi
 import dev.bpmcrafters.processengineapi.task.TaskTerminationHandler
 import dev.bpmcrafters.processengineapi.task.TaskType
 import io.miragon.example.formcentric.application.port.`in`.SendMailUseCase
+import io.miragon.example.formcentric.application.port.`in`.TaskListUseCase
 import io.miragon.example.formcentric.domain.BusinessTripRequest
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Autowired
@@ -30,19 +31,21 @@ private val mapper = jacksonObjectMapper().apply {
 @Component
 @Suppress("unused")
 class UserTaskHandler() {
+    lateinit var taskListUseCase: TaskListUseCase
+
     lateinit var sendMailUseCase: SendMailUseCase
 
     lateinit var taskSubscriptionApi: TaskSubscriptionApi
-
-    private val handledUserTasks: MutableList<String> = mutableListOf()
 
     private val log = KotlinLogging.logger {}
 
     @Autowired
     constructor(
+        taskListUseCase: TaskListUseCase,
         sendMailUseCase: SendMailUseCase,
         taskSubscriptionApi: TaskSubscriptionApi,
     ) : this() {
+        this.taskListUseCase = taskListUseCase
         this.sendMailUseCase = sendMailUseCase
         this.taskSubscriptionApi = taskSubscriptionApi
         this.subscribe()
@@ -59,23 +62,21 @@ class UserTaskHandler() {
                 null,
                 null,
                 { taskInfo, variables ->
-                    if (!handledUserTasks.contains(taskInfo.taskId)) {
-                        log.info { "[TaskHandler] received task ${taskInfo.taskId} with meta ${taskInfo.meta}." }
-                        try {
-                            val request = mapper.convertValue(variables["request"], BusinessTripRequest::class.java)
-                            sendMailUseCase.sendMail(request.email, taskInfo.taskId)
-                            handledUserTasks.add(taskInfo.taskId)
-                        } catch (e: IllegalArgumentException) {
-                            log.error(e) { "Failed to parse request!" }
-                        } catch (e: Exception) {
-                            log.error(e) { "Failed to send mail!" }
-                        }
+                    log.info { "[TaskHandler] received task ${taskInfo.taskId}." }
+                    try {
+                        val request = mapper.convertValue(variables["request"], BusinessTripRequest::class.java)
+                        taskListUseCase.addTask(taskInfo.taskId, request)
+                        sendMailUseCase.sendMail(request.email, taskInfo.taskId)
+                    } catch (e: IllegalArgumentException) {
+                        log.error(e) { "Failed to parse request!" }
+                    } catch (e: Exception) {
+                        log.error(e) { "Failed to send mail!" }
                     }
                 },
                 TaskTerminationHandler { taskInfo ->
                     log.info { "[TaskHandler] task $taskInfo terminated." }
                     // Remove the task if it gets terminated.
-                    // handledUserTasks.remove(taskInfo.taskId)
+                    taskListUseCase.completeTask(taskInfo.taskId)
                 }
             )
         ).get()
