@@ -6,7 +6,7 @@
             "scope": "#/properties/name",
             "label": "Name",
             "options": {
-                "readonly": true
+                "readonly": false
             }
         },
         {
@@ -14,7 +14,7 @@
             "scope": "#/properties/email",
             "label": "Email",
             "options": {
-                "readonly": true
+                "readonly": false
             }
         },
         {
@@ -25,7 +25,7 @@
                     "scope": "#/properties/dateFrom",
                     "label": "Von",
                     "options": {
-                        "readonly": true
+                        "readonly": false
                     }
                 },
                 {
@@ -33,7 +33,7 @@
                     "scope": "#/properties/dateTo",
                     "label": "Bis",
                     "options": {
-                        "readonly": true
+                        "readonly": false
                     }
                 }
             ]
@@ -43,7 +43,7 @@
             "scope": "#/properties/cost",
             "label": "Kosten",
             "options": {
-                "readonly": true
+                "readonly": false
             }
         },
         {
@@ -51,7 +51,7 @@
             "scope": "#/properties/destination",
             "label": "Ziel",
             "options": {
-                "readonly": true
+                "readonly": false
             }
         },
         {

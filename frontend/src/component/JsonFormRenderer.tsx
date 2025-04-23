@@ -1,9 +1,9 @@
-import {Button, Grid} from "@mui/material";
+import {Button, Card, Grid, Typography} from "@mui/material";
 import {materialCells, materialRenderers} from "@jsonforms/material-renderers";
 import {JsonForms} from "@jsonforms/react";
 import { useState } from "react";
 import {UISchemaElement} from "@jsonforms/core";
-import SendIcon from "@mui/icons-material/Save";
+import SendIcon from "@mui/icons-material/Check";
 import {tss} from "tss-react";
 import {BusinessTripRequestDto} from "../api/generated";
 
@@ -52,35 +52,40 @@ export default function JsonFormRenderer({ schema, uiSchema, data, onSubmit }: P
 
     return (
         <Grid container direction="column" justifyContent="start" alignContent="center" className={classes.formContainer}>
-            <Grid>
-                <div className={classes.demoform}>
-                    <JsonForms
-                        schema={schema}
-                        uischema={uiSchema as unknown as UISchemaElement}
-                        data={formData}
-                        renderers={renderers}
-                        cells={materialCells}
-                        onChange={({ errors, data }) =>
-                            handleFormChange({ errors, data })
-                        }
-                    />
-                </div>
-            </Grid>
-            <Grid>
-                <div className={classes.buttonContainer}>
-                    <Button
-                        className={classes.btn}
-                        variant="contained"
-                        color="primary"
-                        size="large"
-                        endIcon={<SendIcon />}
-                        disabled={formError}
-                        onClick={submit}
-                    >
-                        Submit
-                    </Button>
-                </div>
-            </Grid>
+           <Card>
+               <Grid p={10}>
+                   <Typography mb={5} variant={"h3"}>Antrag prüfen</Typography>
+                <Grid>
+                    <div className={classes.demoform}>
+                        <JsonForms
+                            schema={schema}
+                            uischema={uiSchema as unknown as UISchemaElement}
+                            data={formData}
+                            renderers={renderers}
+                            cells={materialCells}
+                            onChange={({ errors, data }) =>
+                                handleFormChange({ errors, data })
+                            }
+                        />
+                    </div>
+                </Grid>
+                <Grid>
+                    <div className={classes.buttonContainer}>
+                        <Button
+                            className={classes.btn}
+                            variant="contained"
+                            color="primary"
+                            size="large"
+                            endIcon={<SendIcon />}
+                            disabled={formError}
+                            onClick={submit}
+                        >
+                            Aufgabe abschließen
+                        </Button>
+                    </div>
+                </Grid>
+               </Grid>
+           </Card>
         </Grid>
     )
 }
