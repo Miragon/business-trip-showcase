@@ -805,19 +805,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jsonforms/vanilla-renderers@npm:^3.5.1":
-  version: 3.5.1
-  resolution: "@jsonforms/vanilla-renderers@npm:3.5.1"
-  dependencies:
-    lodash: "npm:^4.17.21"
-  peerDependencies:
-    "@jsonforms/core": 3.5.1
-    "@jsonforms/react": 3.5.1
-    react: ^16.12.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-  checksum: 10c0/70ca46852a3315212eeadcf168adb568c44f7459761261652f13e18e75e2bf3ab4aaf5d32bcaff95fea45d6fd34f9f6e22a6542e1b46aef3183282d6545b2695
-  languageName: node
-  linkType: hard
-
 "@lukeed/csprng@npm:^1.0.0":
   version: 1.1.0
   resolution: "@lukeed/csprng@npm:1.1.0"
@@ -2790,7 +2777,6 @@ __metadata:
     "@jsonforms/core": "npm:^3.5.1"
     "@jsonforms/material-renderers": "npm:^3.5.1"
     "@jsonforms/react": "npm:^3.5.1"
-    "@jsonforms/vanilla-renderers": "npm:^3.5.1"
     "@mui/icons-material": "npm:^7.0.2"
     "@mui/material": "npm:^7.0.2"
     "@mui/x-date-pickers": "npm:^7.29.0"
