@@ -1,25 +1,21 @@
 package io.miragon.example.formcentric.application.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import io.miragon.example.formcentric.application.port.out.TaskDataPort
 import io.miragon.example.formcentric.domain.JsonForm
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.mock
 
 class DataServiceTest {
 
     private lateinit var dataService: DataService
     private lateinit var objectMapper: ObjectMapper
-    private lateinit var taskDataPort: TaskDataPort
 
     @BeforeEach
     fun setUp() {
         objectMapper = ObjectMapper()
-        taskDataPort = mock(TaskDataPort::class.java)
-        dataService = DataService(objectMapper, taskDataPort)
+        dataService = DataService(objectMapper)
     }
 
     @Test

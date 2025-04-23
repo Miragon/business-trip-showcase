@@ -1,7 +1,7 @@
 package io.miragon.example.formcentric.adapter.`in`.rest
 
 import io.miragon.example.formcentric.adapter.`in`.rest.model.BusinessTripRequestDto
-import io.miragon.example.formcentric.application.port.`in`.StartProcessUseCase
+import io.miragon.example.formcentric.application.port.`in`.BusinessTripRequestUseCase
 import io.miragon.example.formcentric.domain.BusinessTripRequest
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
@@ -11,15 +11,15 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/rest/process")
-class StartProcessController(
-    private val startProcessUseCase: StartProcessUseCase
+class BusinessTripRequestController(
+    private val businessTripRequestUseCase: BusinessTripRequestUseCase
 ) {
 
     @PostMapping("/start")
     fun startProcess(@RequestBody request: BusinessTripRequestDto): ResponseEntity<Unit> {
 
         try {
-            startProcessUseCase.startProcess(
+            businessTripRequestUseCase.request(
                 BusinessTripRequest(
                     name = request.name,
                     email = request.email,
@@ -31,7 +31,7 @@ class StartProcessController(
                 )
             )
             return ResponseEntity.ok().build()
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             return ResponseEntity.badRequest().build()
         }
     }

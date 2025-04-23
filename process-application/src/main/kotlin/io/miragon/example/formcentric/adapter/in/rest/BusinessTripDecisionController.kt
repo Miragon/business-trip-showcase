@@ -2,7 +2,7 @@ package io.miragon.example.formcentric.adapter.`in`.rest
 
 import io.miragon.example.formcentric.adapter.`in`.rest.model.BusinessTripRequestDto
 import io.miragon.example.formcentric.adapter.`in`.rest.model.FormDataDto
-import io.miragon.example.formcentric.application.port.`in`.CompleteUserTaskUseCase
+import io.miragon.example.formcentric.application.port.`in`.BusinessTripDecisionUseCase
 import io.miragon.example.formcentric.application.port.`in`.GetFormDataUseCase
 import io.miragon.example.formcentric.application.port.`in`.TaskListUseCase
 import io.miragon.example.formcentric.domain.BusinessTripRequest
@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/rest/task/{taskId}")
-class TaskController(
+class BusinessTripDecisionController(
     private val getFormDataUseCase: GetFormDataUseCase,
     private val taskListUseCase: TaskListUseCase,
-    private val completeUserTaskUseCase: CompleteUserTaskUseCase,
+    private val businessTripDecisionUseCase: BusinessTripDecisionUseCase,
 ) {
 
     @GetMapping("/load")
@@ -38,7 +38,7 @@ class TaskController(
                     )
                 )
             )
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             return ResponseEntity.badRequest().build()
         }
     }
@@ -46,7 +46,7 @@ class TaskController(
     @PostMapping("/complete")
     fun complete(@PathVariable taskId: String, @RequestBody request: BusinessTripRequestDto): ResponseEntity<Boolean> {
         try {
-            val result = completeUserTaskUseCase.complete(
+            val result = businessTripDecisionUseCase.decide(
                 taskId,
                 BusinessTripRequest(
                     name = request.name,
@@ -61,7 +61,7 @@ class TaskController(
             )
             taskListUseCase.completeTask(taskId)
             return ResponseEntity.ok(result)
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             return ResponseEntity.badRequest().build()
         }
     }

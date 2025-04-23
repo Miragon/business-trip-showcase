@@ -1,20 +1,22 @@
 package io.miragon.example.formcentric.application.service
 
-import io.miragon.example.formcentric.application.port.`in`.SendMailUseCase
+import io.miragon.example.formcentric.application.port.`in`.MailUseCase
 import io.miragon.example.formcentric.application.port.out.SendNotificationPort
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 
 @Service
-class SendNotificationService(
+class MailService(
     private val sendNotificationPort: SendNotificationPort
-) : SendMailUseCase {
+) : MailUseCase {
 
-    @Value("\${miragon.base-url}")
+    @Value("\${formcentric-showcase.base-url}")
     lateinit var baseUrl: String
 
     override fun sendMail(email: String, taskId: String) {
+        val subject = "New business trip request"
         val link = "$baseUrl/$taskId"
-        sendNotificationPort.sendMail(email, link)
+        val body = "A new business trip request was sent. Please review it using $link"
+        sendNotificationPort.send(email, subject, body)
     }
 }

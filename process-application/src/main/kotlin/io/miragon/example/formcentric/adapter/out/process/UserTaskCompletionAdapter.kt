@@ -3,6 +3,7 @@ package io.miragon.example.formcentric.adapter.out.process
 import dev.bpmcrafters.processengineapi.task.CompleteTaskCmd
 import dev.bpmcrafters.processengineapi.task.UserTaskCompletionApi
 import io.miragon.example.formcentric.application.port.out.UserTaskCompletionPort
+import io.miragon.example.formcentric.domain.BusinessTripRequest
 import mu.KotlinLogging
 import org.springframework.stereotype.Component
 
@@ -13,12 +14,12 @@ class UserTaskCompletionAdapter(
 
     private val log = KotlinLogging.logger {}
 
-    override fun complete(taskId: String, approval: Boolean): Boolean {
+    override fun complete(taskId: String, request: BusinessTripRequest): Boolean {
         try {
             taskCompletionApi.completeTask(
                 CompleteTaskCmd(
                     taskId,
-                    mapOf("approval" to approval)
+                    payload = mapOf<String, Any>("approval" to request.approval, "comment" to (request.comment ?: ""))
                 )
             ).get()
             return true
@@ -27,5 +28,4 @@ class UserTaskCompletionAdapter(
             return true
         }
     }
-
 }

@@ -1,4 +1,4 @@
-package io.miragon.example.formcentric.adapter.out.mail
+package io.miragon.example.formcentric.adapter.out.notification
 
 import io.miragon.example.formcentric.application.port.out.SendNotificationPort
 import mu.KotlinLogging
@@ -9,8 +9,7 @@ class NotificationAdapter() : SendNotificationPort {
 
     private val log = KotlinLogging.logger {}
 
-    override fun sendMail(email: String, link: String) {
-        // TODO: Implement SendGrid
-        log.info { "Send mail to $email with link $link" }
+    override fun send(address: String, subject: String, body: String) {
+        log.info { "Send mail to $address with message $body" }
     }
 }

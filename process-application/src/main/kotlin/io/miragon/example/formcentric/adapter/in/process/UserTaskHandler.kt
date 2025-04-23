@@ -10,7 +10,7 @@ import dev.bpmcrafters.processengineapi.task.SubscribeForTaskCmd
 import dev.bpmcrafters.processengineapi.task.TaskSubscriptionApi
 import dev.bpmcrafters.processengineapi.task.TaskTerminationHandler
 import dev.bpmcrafters.processengineapi.task.TaskType
-import io.miragon.example.formcentric.application.port.`in`.SendMailUseCase
+import io.miragon.example.formcentric.application.port.`in`.MailUseCase
 import io.miragon.example.formcentric.application.port.`in`.TaskListUseCase
 import io.miragon.example.formcentric.domain.BusinessTripRequest
 import mu.KotlinLogging
@@ -33,7 +33,7 @@ private val mapper = jacksonObjectMapper().apply {
 class UserTaskHandler() {
     lateinit var taskListUseCase: TaskListUseCase
 
-    lateinit var sendMailUseCase: SendMailUseCase
+    lateinit var mailUseCase: MailUseCase
 
     lateinit var taskSubscriptionApi: TaskSubscriptionApi
 
@@ -42,11 +42,11 @@ class UserTaskHandler() {
     @Autowired
     constructor(
         taskListUseCase: TaskListUseCase,
-        sendMailUseCase: SendMailUseCase,
+        mailUseCase: MailUseCase,
         taskSubscriptionApi: TaskSubscriptionApi,
     ) : this() {
         this.taskListUseCase = taskListUseCase
-        this.sendMailUseCase = sendMailUseCase
+        this.mailUseCase = mailUseCase
         this.taskSubscriptionApi = taskSubscriptionApi
         this.subscribe()
     }
@@ -66,7 +66,7 @@ class UserTaskHandler() {
                     try {
                         val request = mapper.convertValue(variables["request"], BusinessTripRequest::class.java)
                         taskListUseCase.addTask(taskInfo.taskId, request)
-                        sendMailUseCase.sendMail(request.email, taskInfo.taskId)
+                        mailUseCase.sendMail(request.email, taskInfo.taskId)
                     } catch (e: IllegalArgumentException) {
                         log.error(e) { "Failed to parse request!" }
                     } catch (e: Exception) {
