@@ -14,9 +14,7 @@ class MailService(
     lateinit var baseUrl: String
 
     override fun sendMail(email: String, taskId: String) {
-        val subject = "New business trip request"
         val link = "$baseUrl/$taskId"
-        val body = "A new business trip request was sent. Please review it using $link"
-        sendNotificationPort.send(email, subject, body)
+        sendNotificationPort.send(email, link)
     }
 }

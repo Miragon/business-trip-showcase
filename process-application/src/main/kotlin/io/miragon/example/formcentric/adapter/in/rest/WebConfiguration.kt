@@ -1,4 +1,4 @@
-package io.miragon.example.formcentric
+package io.miragon.example.formcentric.adapter.`in`.rest
 
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.servlet.config.annotation.CorsRegistry

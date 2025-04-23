@@ -1,5 +1,5 @@
 package io.miragon.example.formcentric.application.port.out
 
 interface SendNotificationPort {
-    fun send(address: String, subject: String, body: String)
+    fun send(email: String, link: String): String
 }
