@@ -7,6 +7,16 @@ server:
 formcentric-showcase:
   base-url: http://localhost:8080
 
+novu:
+  api:
+    url: https://eu.api.novu.co
+    key: ${NOVU_SECRET_KEY}
+  subscriber:
+    email: "peter.heinemann@miragon.io"
+    credentials:
+      ms-teams:
+        webhook: ${MS_TEAMS_WEBHOOK_URL}
+
 camunda:
   client:
     mode: saas
