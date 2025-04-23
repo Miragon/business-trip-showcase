@@ -4,6 +4,9 @@
 server:
   port: 8081
 
+miragon:
+  base-url: http://localhost:8080
+
 camunda:
   client:
     mode: saas

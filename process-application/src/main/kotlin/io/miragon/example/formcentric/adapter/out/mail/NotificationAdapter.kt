@@ -1,11 +1,11 @@
 package io.miragon.example.formcentric.adapter.out.mail
 
-import io.miragon.example.formcentric.application.port.out.SendMailPort
+import io.miragon.example.formcentric.application.port.out.SendNotificationPort
 import mu.KotlinLogging
 import org.springframework.stereotype.Component
 
 @Component
-class MailAdapter() : SendMailPort {
+class NotificationAdapter() : SendNotificationPort {
 
     private val log = KotlinLogging.logger {}
 
