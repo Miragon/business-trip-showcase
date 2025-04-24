@@ -45,5 +45,7 @@ sequenceDiagram
 ## Technologien
 
 * Camunda 7 / 8
-* Process Engine API
-* JSON Forms
+* [Process Engine API](https://github.com/bpm-crafters/process-engine-api)
+* [Formcentric](https://formcentric.com/de/)
+* [Novu](https://docs.novu.co/platform/overview)
+* [JSON Forms](https://jsonforms.io/docs/)
