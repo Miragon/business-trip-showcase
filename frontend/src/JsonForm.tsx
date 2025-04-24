@@ -12,7 +12,7 @@ const useStyles = tss.create({
         padding: "1rem",
     },
     result: {
-        height: "100%",
+        height: "100vh",
     },
     demoform: {
         margin: "auto",
