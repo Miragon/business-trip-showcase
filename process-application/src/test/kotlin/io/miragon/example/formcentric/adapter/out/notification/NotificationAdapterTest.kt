@@ -4,6 +4,8 @@ import co.novu.Novu
 import co.novu.extensions.messages
 import io.miragon.example.formcentric.adapter.out.notification.novu.NovuConfiguration
 import io.miragon.example.formcentric.adapter.out.notification.novu.NovuProperties
+import io.miragon.example.formcentric.domain.Email
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -23,21 +25,44 @@ class NotificationAdapterTest {
     private lateinit var novuApiV1: Novu
 
     @Test
-    fun `should send notification with link`() {
+    fun `should send notification to reviewer`() {
         // Given
-        val email = "peter.hnm@gmx.de"
         val testLink = "https://example.com/form/123456789"
 
-        // When
-        val transactionId = notificationAdapter.send(email, testLink)
-
-        // Then
         runBlocking {
+            // When
+            val transactionId = notificationAdapter.sendToReviewer(testLink)
+
+            // Then
+            delay(2000)
             val response = novuApiV1.messages(
                 transactionId = transactionId,
             )?.data
 
-            assertTrue { response?.isNotEmpty() ?: false }
+            assertTrue { response?.size == 2 }
+        }
+    }
+
+    @Test
+    fun `should send notification to applicant`() {
+        // Given
+        val email = Email(
+            address = "peter.heinemann@miragon.io",
+            subject = "Test",
+            body = "test",
+        )
+
+        runBlocking {
+            // When
+            val transactionId = notificationAdapter.sendToApplicant(email)
+
+            // Then
+            delay(2000)
+            val response = novuApiV1.messages(
+                transactionId = transactionId,
+            )?.data
+
+            assertTrue { response?.size == 1 }
         }
     }
 }

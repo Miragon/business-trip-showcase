@@ -19,7 +19,7 @@ class UserTaskCompletionAdapter(
             taskCompletionApi.completeTask(
                 CompleteTaskCmd(
                     taskId,
-                    payload = mapOf<String, Any>("approval" to request.approval, "comment" to (request.comment ?: ""))
+                    payload = mapOf<String, Any>("request" to request)
                 )
             ).get()
             return true

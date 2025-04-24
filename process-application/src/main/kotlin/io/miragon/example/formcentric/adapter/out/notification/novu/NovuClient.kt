@@ -8,6 +8,7 @@ import co.novu.dto.request.SubscriberRequest
 import co.novu.dto.request.TriggerEventRequest
 import co.novu.dto.request.UpdateSubscriberCredentialsRequest
 import co.novu.extensions.*
+import io.miragon.example.formcentric.domain.Email
 import kotlinx.coroutines.runBlocking
 
 class NovuClient(
@@ -32,20 +33,30 @@ class NovuClient(
 
     fun cleanUp() = runBlocking {
         // delete subscriber
-        deleteSubscriber()
+        // deleteSubscriber()
         // delete ms-teams integration
-        deleteMsTeamsIntegration()
+        // deleteMsTeamsIntegration()
         // delete workflow
     }
 
-    suspend fun trigger(email: String, link: String): String? {
+    suspend fun trigger(link: String, chat: Boolean = false, email: Email? = null): String? {
+        val overrides = if (email != null)
+            mapOf(
+                "email" to mapOf(
+                    "to" to listOf(email.address),
+                    "subject" to email.subject,
+                    "text" to email.body,
+                )
+            )
+        else emptyMap()
+
         val request = TriggerEventRequest(
             name = "formcentric-showcase", // the name of the workflow
             to = SubscriberRequest(
                 subscriberId
             ),
-            payload = mapOf("link" to link),
-            overrides = mapOf("email" to mapOf("to" to listOf(email)))
+            payload = mapOf("link" to link, "chat" to chat),
+            overrides = overrides,
         )
 
         val response = novuApiV1.trigger(request)?.data
