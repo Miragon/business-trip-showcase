@@ -18,8 +18,9 @@ import org.springframework.web.bind.annotation.RestController
 class BusinessTripRequestController(
     private val businessTripRequestUseCase: BusinessTripRequestUseCase
 ) {
-
     private val log = KotlinLogging.logger {}
+
+    private var requestHash = ""
 
     @PostMapping("/start", consumes = [MediaType.APPLICATION_JSON_VALUE])
     fun startProcess(@RequestBody request: BusinessTripRequestDto): ResponseEntity<Unit> {
@@ -46,6 +47,15 @@ class BusinessTripRequestController(
     @PostMapping("/start", consumes = [MediaType.TEXT_PLAIN_VALUE])
     fun startProcess(@RequestBody body: String): ResponseEntity<Unit> {
         log.info { "[${this::class.simpleName}] Request received" }
+
+        val rh = body.hashCode().toString()
+        if (this.requestHash == rh) {
+            log.info { "[${this::class.simpleName}] Duplicate request received" }
+            return ResponseEntity.ok().build()
+        }
+
+        this.requestHash = rh
+
         return try {
             val mapper = jacksonObjectMapper().registerModule(JavaTimeModule())
             val dto = mapper.readValue(body, BusinessTripRequestDto::class.java)
