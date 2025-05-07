@@ -1,8 +1,11 @@
 package io.miragon.example.formcentric.adapter.`in`.rest
 
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.miragon.example.formcentric.adapter.`in`.rest.model.BusinessTripRequestDto
 import io.miragon.example.formcentric.application.port.`in`.BusinessTripRequestUseCase
 import io.miragon.example.formcentric.domain.BusinessTripRequest
+import mu.KotlinLogging
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -15,10 +18,11 @@ class BusinessTripRequestController(
     private val businessTripRequestUseCase: BusinessTripRequestUseCase
 ) {
 
-    @PostMapping("/start")
-    fun startProcess(@RequestBody request: BusinessTripRequestDto): ResponseEntity<Unit> {
+    private val log = KotlinLogging.logger {}
 
-        try {
+    @PostMapping("/start", consumes = [MediaType.APPLICATION_JSON_VALUE])
+    fun startProcess(@RequestBody request: BusinessTripRequestDto): ResponseEntity<Unit> {
+        return try {
             businessTripRequestUseCase.request(
                 BusinessTripRequest(
                     name = request.name,
@@ -30,9 +34,30 @@ class BusinessTripRequestController(
                     approval = false
                 )
             )
-            return ResponseEntity.ok().build()
+            ResponseEntity.ok().build()
         } catch (_: Exception) {
-            return ResponseEntity.badRequest().build()
+            ResponseEntity.badRequest().build()
+        }
+    }
+
+    @PostMapping("/start", consumes = [MediaType.TEXT_PLAIN_VALUE])
+    fun startProcess(@RequestBody body: String): ResponseEntity<Unit> {
+        return try {
+            val dto = jacksonObjectMapper().readValue(body, BusinessTripRequestDto::class.java)
+            businessTripRequestUseCase.request(
+                BusinessTripRequest(
+                    name = dto.name,
+                    email = dto.email,
+                    dateFrom = dto.dateFrom,
+                    dateTo = dto.dateTo,
+                    cost = dto.cost,
+                    destination = dto.destination,
+                    approval = false
+                )
+            )
+            ResponseEntity.ok().build()
+        } catch (_: Exception) {
+            ResponseEntity.badRequest().build()
         }
     }
 }
