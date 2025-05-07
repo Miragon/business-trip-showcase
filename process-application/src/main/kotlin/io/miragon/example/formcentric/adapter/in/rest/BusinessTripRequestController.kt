@@ -1,5 +1,6 @@
 package io.miragon.example.formcentric.adapter.`in`.rest
 
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.miragon.example.formcentric.adapter.`in`.rest.model.BusinessTripRequestDto
 import io.miragon.example.formcentric.application.port.`in`.BusinessTripRequestUseCase
@@ -22,6 +23,7 @@ class BusinessTripRequestController(
 
     @PostMapping("/start", consumes = [MediaType.APPLICATION_JSON_VALUE])
     fun startProcess(@RequestBody request: BusinessTripRequestDto): ResponseEntity<Unit> {
+        log.info { "[${this::class.simpleName}] Request received" }
         return try {
             businessTripRequestUseCase.request(
                 BusinessTripRequest(
@@ -35,15 +37,18 @@ class BusinessTripRequestController(
                 )
             )
             ResponseEntity.ok().build()
-        } catch (_: Exception) {
+        } catch (e: Exception) {
+            log.error(e) { "[${this::class.simpleName}] Request failed" }
             ResponseEntity.badRequest().build()
         }
     }
 
     @PostMapping("/start", consumes = [MediaType.TEXT_PLAIN_VALUE])
     fun startProcess(@RequestBody body: String): ResponseEntity<Unit> {
+        log.info { "[${this::class.simpleName}] Request received" }
         return try {
-            val dto = jacksonObjectMapper().readValue(body, BusinessTripRequestDto::class.java)
+            val mapper = jacksonObjectMapper().registerModule(JavaTimeModule())
+            val dto = mapper.readValue(body, BusinessTripRequestDto::class.java)
             businessTripRequestUseCase.request(
                 BusinessTripRequest(
                     name = dto.name,
@@ -56,7 +61,8 @@ class BusinessTripRequestController(
                 )
             )
             ResponseEntity.ok().build()
-        } catch (_: Exception) {
+        } catch (e: Exception) {
+            log.error(e) { "[${this::class.simpleName}] Request failed" }
             ResponseEntity.badRequest().build()
         }
     }

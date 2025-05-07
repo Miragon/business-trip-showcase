@@ -19,10 +19,10 @@ class BusinessTripDecisionController(
 
     @GetMapping("/load")
     fun load(@PathVariable taskId: String): ResponseEntity<FormDataDto> {
-        try {
+        return try {
             val form = this.getFormDataUseCase.getFormData()
             val data = this.taskListUseCase.getVariables(taskId)
-            return ResponseEntity.ok(
+            ResponseEntity.ok(
                 FormDataDto(
                     schema = form.schema,
                     uiSchema = form.uiSchema,
@@ -39,13 +39,13 @@ class BusinessTripDecisionController(
                 )
             )
         } catch (_: Exception) {
-            return ResponseEntity.badRequest().build()
+            ResponseEntity.badRequest().build()
         }
     }
 
     @PostMapping("/complete")
     fun complete(@PathVariable taskId: String, @RequestBody request: BusinessTripRequestDto): ResponseEntity<Boolean> {
-        try {
+        return try {
             val result = businessTripDecisionUseCase.decide(
                 taskId,
                 BusinessTripRequest(
@@ -60,9 +60,9 @@ class BusinessTripDecisionController(
                 )
             )
             taskListUseCase.completeTask(taskId)
-            return ResponseEntity.ok(result)
+            ResponseEntity.ok(result)
         } catch (_: Exception) {
-            return ResponseEntity.badRequest().build()
+            ResponseEntity.badRequest().build()
         }
     }
 

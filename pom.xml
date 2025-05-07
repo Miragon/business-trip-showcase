@@ -16,8 +16,6 @@
         <!-- kotlin -->
         <kotlin.code.style>official</kotlin.code.style>
         <kotlin.version>2.1.20</kotlin.version>
-        <kotlin.logging.version>3.0.5</kotlin.logging.version>
-        <kotlin.jackson.version>2.18.3</kotlin.jackson.version>
         <kotlin.compiler.jvmTarget>21</kotlin.compiler.jvmTarget>
         <!-- java -->
         <maven.compiler-target>21</maven.compiler-target>
@@ -25,11 +23,6 @@
         <java.version>21</java.version>
         <!-- spring -->
         <spring.boot.version>3.4.4</spring.boot.version>
-        <!-- camunda -->
-        <camunda.version>8.7.1</camunda.version>
-        <camunda.tasklist.version>8.7.0</camunda.tasklist.version>
-        <!-- process engine api -->
-        <process.engine.api.version>1.1</process.engine.api.version>
         <!-- project -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -58,16 +51,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.module</groupId>
-                <artifactId>jackson-module-kotlin</artifactId>
-                <version>${kotlin.jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.github.microutils</groupId>
-                <artifactId>kotlin-logging-jvm</artifactId>
-                <version>${kotlin.logging.version}</version>
-            </dependency>
             <!-- spring boot -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -75,34 +58,6 @@
                 <version>${spring.boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
-            <!-- camunda -->
-            <dependency>
-                <groupId>io.camunda</groupId>
-                <artifactId>spring-boot-starter-camunda-sdk</artifactId>
-                <version>${camunda.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.camunda</groupId>
-                <artifactId>camunda-tasklist-client-java</artifactId>
-                <version>${camunda.tasklist.version}</version>
-            </dependency>
-            <!-- process engine api -->
-            <dependency>
-                <groupId>dev.bpm-crafters.process-engine-api</groupId>
-                <artifactId>process-engine-api</artifactId>
-                <version>${process.engine.api.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>dev.bpm-crafters.process-engine-api</groupId>
-                <artifactId>process-engine-api-impl</artifactId>
-                <version>${process.engine.api.version}</version>
-            </dependency>
-            <!-- etc -->
-            <dependency>
-                <groupId>org.springdoc</groupId>
-                <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-                <version>2.5.0</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -1,9 +1,6 @@
 package io.miragon.example.formcentric.adapter.`in`.process
 
-import com.fasterxml.jackson.core.JsonParser
-import com.fasterxml.jackson.databind.DeserializationContext
-import com.fasterxml.jackson.databind.JsonDeserializer
-import com.fasterxml.jackson.databind.module.SimpleModule
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import dev.bpmcrafters.processengineapi.CommonRestrictions
 import dev.bpmcrafters.processengineapi.task.SubscribeForTaskCmd
@@ -16,18 +13,17 @@ import io.miragon.example.formcentric.domain.BusinessTripRequest
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import java.time.LocalDate
 
-private val mapper = jacksonObjectMapper().apply {
-    registerModule(SimpleModule().apply {
-        addDeserializer(LocalDate::class.java, object : JsonDeserializer<LocalDate>() {
-            override fun deserialize(jp: JsonParser, ctxt: DeserializationContext): LocalDate {
-                return LocalDate.parse(jp.text)
-            }
-        })
-    })
-}
-
+//private val mapper = jacksonObjectMapper().apply {
+//    registerModule(SimpleModule().apply {
+//        addDeserializer(LocalDate::class.java, object : JsonDeserializer<LocalDate>() {
+//            override fun deserialize(jp: JsonParser, ctxt: DeserializationContext): LocalDate {
+//                return LocalDate.parse(jp.text)
+//            }
+//        })
+//    })
+//}
+//
 @Component
 @Suppress("unused")
 class UserTaskHandler() {
@@ -64,6 +60,7 @@ class UserTaskHandler() {
                 { taskInfo, variables ->
                     log.info { "[TaskHandler] received task ${taskInfo.taskId}." }
                     try {
+                        val mapper = jacksonObjectMapper().registerModule(JavaTimeModule())
                         val request = mapper.convertValue(variables["request"], BusinessTripRequest::class.java)
                         taskListUseCase.addTask(taskInfo.taskId, request)
                         notifyReviewerUseCase.sendNotification(taskInfo.taskId)
