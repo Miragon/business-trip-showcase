@@ -1,14 +1,9 @@
 {
     "type": "object",
     "properties": {
-        "name": {
+        "mail": {
             "type": "string",
-            "title": "Name",
-            "description": "The name of the applicant"
-        },
-        "email": {
-            "type": "string",
-            "title": "Email",
+            "title": "E-Mail",
             "description": "The email of the approver.",
             "format": "email"
         },
@@ -18,7 +13,7 @@
         },
         "approval": {
             "type": "boolean",
-            "title": "Genehmigung"
+            "title": "Reise erstatten?"
         },
         "salutation": {
             "type": "string",
@@ -49,7 +44,8 @@
             "type": "array",
             "items": {
                 "$ref": "#/$defs/destination"
-            }
+            },
+            "title": "Reiseorte"
         },
         "approvalComment": {
             "type": "string",
@@ -57,6 +53,14 @@
         },
         "finalDestination": {
             "$ref": "#/$defs/destination"
+        },
+        "firstName": {
+            "type": "string",
+            "title": "Vorname"
+        },
+        "lastName": {
+            "type": "string",
+            "title": "Name"
         }
     },
     "required": [

@@ -11,21 +11,28 @@
                 {
                     "type": "Control",
                     "scope": "#/properties/title"
+                }
+            ]
+        },
+        {
+            "type": "HorizontalLayout",
+            "elements": [
+                {
+                    "type": "Control",
+                    "scope": "#/properties/firstName",
+                    "label": "Vorname"
                 },
                 {
                     "type": "Control",
-                    "scope": "#/properties/name",
-                    "label": "Name",
-                    "options": {
-                        "readonly": true
-                    }
+                    "scope": "#/properties/lastName",
+                    "label": "Name"
                 }
             ]
         },
         {
             "type": "Control",
-            "scope": "#/properties/email",
-            "label": "Email",
+            "scope": "#/properties/mail",
+            "label": "E-Mail",
             "options": {
                 "readonly": true
             }
@@ -67,16 +74,18 @@
         },
         {
             "type": "Control",
-            "scope": "#/properties/destinations"
+            "scope": "#/properties/destinations",
+            "label": "Reiseorte"
         },
         {
             "type": "Control",
-            "scope": "#/properties/finalDestination"
+            "scope": "#/properties/finalDestination",
+            "label": "Ankunft"
         },
         {
             "type": "Control",
             "scope": "#/properties/approval",
-            "label": "Genehmigung"
+            "label": "Reise erstatten?"
         },
         {
             "type": "Control",

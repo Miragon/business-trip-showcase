@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import { Grid } from "@mui/material";
+import {useEffect, useState} from "react";
+import {Grid} from "@mui/material";
 import CelebrationRoundedIcon from "@mui/icons-material/CelebrationRounded";
 import HourglassBottomRounded from "@mui/icons-material/HourglassBottomRounded";
-import { tss } from "tss-react";
-import { BusinessTripRequestDto, FormDataDto, TaskControllerApi } from "./api/generated";
-import { useParams } from "react-router-dom";
+import {tss} from "tss-react";
+import {BusinessTripDecisionControllerApi, BusinessTripRequestDetailedDto, FormDataDto} from "./api/generated";
+import {useParams} from "react-router-dom";
 import JsonFormRenderer from "./component/JsonFormRenderer.tsx";
 
 const useStyles = tss.create({
@@ -35,11 +35,11 @@ export default function JsonForm() {
     const [completion, setCompletion] = useState(false);
     const [formData, setFormData] = useState<FormDataDto>();
 
-    const { classes } = useStyles();
+    const {classes} = useStyles();
 
-    const api = new TaskControllerApi();
+    const api = new BusinessTripDecisionControllerApi();
 
-    async function submit(data: BusinessTripRequestDto) {
+    async function submit(data: BusinessTripRequestDetailedDto) {
         const result = await api.complete(taskId, data);
         setCompletion(result.data);
         return result.data;
@@ -62,7 +62,7 @@ export default function JsonForm() {
                 alignContent="center"
                 className={classes.result}
             >
-                <CelebrationRoundedIcon /> Task has been completed!
+                <CelebrationRoundedIcon/> Task has been completed!
             </Grid>
         ) : (
             <JsonFormRenderer
@@ -79,7 +79,7 @@ export default function JsonForm() {
             alignContent="center"
             className={classes.result}
         >
-            <HourglassBottomRounded /> Loading...
+            <HourglassBottomRounded/> Loading...
         </Grid>
     );
 }

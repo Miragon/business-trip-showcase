@@ -1,7 +1,6 @@
 package io.miragon.example.formcentric.adapter.`in`.rest
 
 import io.miragon.example.formcentric.adapter.`in`.rest.model.BusinessTripRequestDetailedDto
-import io.miragon.example.formcentric.adapter.`in`.rest.model.BusinessTripRequestDto
 import io.miragon.example.formcentric.adapter.`in`.rest.model.FormDataDto
 import io.miragon.example.formcentric.application.port.`in`.BusinessTripDecisionUseCase
 import io.miragon.example.formcentric.application.port.`in`.GetFormDataUseCase
@@ -60,7 +59,10 @@ class BusinessTripDecisionController(
     }
 
     @PostMapping("/complete")
-    fun complete(@PathVariable taskId: String, @RequestBody request: BusinessTripRequestDto): ResponseEntity<Boolean> {
+    fun complete(
+        @PathVariable taskId: String,
+        @RequestBody request: BusinessTripRequestDetailedDto
+    ): ResponseEntity<Boolean> {
         return try {
             val result = businessTripDecisionUseCase.decide(
                 taskId,

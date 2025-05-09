@@ -2,14 +2,9 @@
   "schema": {
     "type": "object",
     "properties": {
-      "name": {
+      "mail": {
         "type": "string",
-        "title": "Name",
-        "description": "The name of the applicant"
-      },
-      "email": {
-        "type": "string",
-        "title": "Email",
+        "title": "E-Mail",
         "description": "The email of the approver.",
         "format": "email"
       },
@@ -19,7 +14,7 @@
       },
       "approval": {
         "type": "boolean",
-        "title": "Genehmigung"
+        "title": "Reise erstatten?"
       },
       "salutation": {
         "type": "string",
@@ -50,7 +45,8 @@
         "type": "array",
         "items": {
           "$ref": "#/$defs/destination"
-        }
+        },
+        "title": "Reiseorte"
       },
       "approvalComment": {
         "type": "string",
@@ -58,6 +54,14 @@
       },
       "finalDestination": {
         "$ref": "#/$defs/destination"
+      },
+      "firstName": {
+        "type": "string",
+        "title": "Vorname"
+      },
+      "lastName": {
+        "type": "string",
+        "title": "Name"
       }
     },
     "required": [
@@ -105,21 +109,28 @@
           {
             "type": "Control",
             "scope": "#/properties/title"
+          }
+        ]
+      },
+      {
+        "type": "HorizontalLayout",
+        "elements": [
+          {
+            "type": "Control",
+            "scope": "#/properties/firstName",
+            "label": "Vorname"
           },
           {
             "type": "Control",
-            "scope": "#/properties/name",
-            "label": "Name",
-            "options": {
-              "readonly": true
-            }
+            "scope": "#/properties/lastName",
+            "label": "Name"
           }
         ]
       },
       {
         "type": "Control",
-        "scope": "#/properties/email",
-        "label": "Email",
+        "scope": "#/properties/mail",
+        "label": "E-Mail",
         "options": {
           "readonly": true
         }
@@ -161,16 +172,18 @@
       },
       {
         "type": "Control",
-        "scope": "#/properties/destinations"
+        "scope": "#/properties/destinations",
+        "label": "Reiseorte"
       },
       {
         "type": "Control",
-        "scope": "#/properties/finalDestination"
+        "scope": "#/properties/finalDestination",
+        "label": "Ankunft"
       },
       {
         "type": "Control",
         "scope": "#/properties/approval",
-        "label": "Genehmigung"
+        "label": "Reise erstatten?"
       },
       {
         "type": "Control",

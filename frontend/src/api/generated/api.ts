@@ -26,6 +26,134 @@ import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerM
 /**
  * 
  * @export
+ * @interface Address
+ */
+export interface Address {
+    /**
+     * 
+     * @type {string}
+     * @memberof Address
+     */
+    'street'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Address
+     */
+    'city'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Address
+     */
+    'zipCode'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface BusinessTripRequestDetailedDto
+ */
+export interface BusinessTripRequestDetailedDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof BusinessTripRequestDetailedDto
+     */
+    'salutation': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BusinessTripRequestDetailedDto
+     */
+    'title'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BusinessTripRequestDetailedDto
+     */
+    'firstName': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BusinessTripRequestDetailedDto
+     */
+    'lastName': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BusinessTripRequestDetailedDto
+     */
+    'mail': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BusinessTripRequestDetailedDto
+     */
+    'iban': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BusinessTripRequestDetailedDto
+     */
+    'tripType': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BusinessTripRequestDetailedDto
+     */
+    'comment'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BusinessTripRequestDetailedDto
+     */
+    'startPoint': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BusinessTripRequestDetailedDto
+     */
+    'startDate': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BusinessTripRequestDetailedDto
+     */
+    'startTime'?: string;
+    /**
+     * 
+     * @type {Address}
+     * @memberof BusinessTripRequestDetailedDto
+     */
+    'address'?: Address;
+    /**
+     * 
+     * @type {Array<Destination>}
+     * @memberof BusinessTripRequestDetailedDto
+     */
+    'destinations': Array<Destination>;
+    /**
+     * 
+     * @type {Destination}
+     * @memberof BusinessTripRequestDetailedDto
+     */
+    'finalDestination': Destination;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BusinessTripRequestDetailedDto
+     */
+    'approval': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof BusinessTripRequestDetailedDto
+     */
+    'approvalComment': string;
+}
+/**
+ * 
+ * @export
  * @interface BusinessTripRequestDto
  */
 export interface BusinessTripRequestDto {
@@ -81,6 +209,31 @@ export interface BusinessTripRequestDto {
 /**
  * 
  * @export
+ * @interface Destination
+ */
+export interface Destination {
+    /**
+     * 
+     * @type {string}
+     * @memberof Destination
+     */
+    'city': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Destination
+     */
+    'date': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Destination
+     */
+    'time'?: string;
+}
+/**
+ * 
+ * @export
  * @interface FormDataDto
  */
 export interface FormDataDto {
@@ -98,136 +251,30 @@ export interface FormDataDto {
     'uiSchema': { [key: string]: object; };
     /**
      * 
-     * @type {BusinessTripRequestDto}
+     * @type {BusinessTripRequestDetailedDto}
      * @memberof FormDataDto
      */
-    'data': BusinessTripRequestDto;
+    'data': BusinessTripRequestDetailedDto;
 }
 
 /**
- * StartProcessControllerApi - axios parameter creator
+ * BusinessTripDecisionControllerApi - axios parameter creator
  * @export
  */
-export const StartProcessControllerApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @param {BusinessTripRequestDto} businessTripRequestDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        startProcess: async (businessTripRequestDto: BusinessTripRequestDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'businessTripRequestDto' is not null or undefined
-            assertParamExists('startProcess', 'businessTripRequestDto', businessTripRequestDto)
-            const localVarPath = `/rest/process/start`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(businessTripRequestDto, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * StartProcessControllerApi - functional programming interface
- * @export
- */
-export const StartProcessControllerApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = StartProcessControllerApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @param {BusinessTripRequestDto} businessTripRequestDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async startProcess(businessTripRequestDto: BusinessTripRequestDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.startProcess(businessTripRequestDto, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['StartProcessControllerApi.startProcess']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-    }
-};
-
-/**
- * StartProcessControllerApi - factory interface
- * @export
- */
-export const StartProcessControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = StartProcessControllerApiFp(configuration)
-    return {
-        /**
-         * 
-         * @param {BusinessTripRequestDto} businessTripRequestDto 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        startProcess(businessTripRequestDto: BusinessTripRequestDto, options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.startProcess(businessTripRequestDto, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * StartProcessControllerApi - object-oriented interface
- * @export
- * @class StartProcessControllerApi
- * @extends {BaseAPI}
- */
-export class StartProcessControllerApi extends BaseAPI {
-    /**
-     * 
-     * @param {BusinessTripRequestDto} businessTripRequestDto 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof StartProcessControllerApi
-     */
-    public startProcess(businessTripRequestDto: BusinessTripRequestDto, options?: RawAxiosRequestConfig) {
-        return StartProcessControllerApiFp(this.configuration).startProcess(businessTripRequestDto, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-
-/**
- * TaskControllerApi - axios parameter creator
- * @export
- */
-export const TaskControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+export const BusinessTripDecisionControllerApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
          * @param {string} taskId 
-         * @param {BusinessTripRequestDto} businessTripRequestDto 
+         * @param {BusinessTripRequestDetailedDto} businessTripRequestDetailedDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        complete: async (taskId: string, businessTripRequestDto: BusinessTripRequestDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        complete: async (taskId: string, businessTripRequestDetailedDto: BusinessTripRequestDetailedDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'taskId' is not null or undefined
             assertParamExists('complete', 'taskId', taskId)
-            // verify required parameter 'businessTripRequestDto' is not null or undefined
-            assertParamExists('complete', 'businessTripRequestDto', businessTripRequestDto)
+            // verify required parameter 'businessTripRequestDetailedDto' is not null or undefined
+            assertParamExists('complete', 'businessTripRequestDetailedDto', businessTripRequestDetailedDto)
             const localVarPath = `/rest/task/{taskId}/complete`
                 .replace(`{${"taskId"}}`, encodeURIComponent(String(taskId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -248,7 +295,7 @@ export const TaskControllerApiAxiosParamCreator = function (configuration?: Conf
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(businessTripRequestDto, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(businessTripRequestDetailedDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -292,23 +339,23 @@ export const TaskControllerApiAxiosParamCreator = function (configuration?: Conf
 };
 
 /**
- * TaskControllerApi - functional programming interface
+ * BusinessTripDecisionControllerApi - functional programming interface
  * @export
  */
-export const TaskControllerApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = TaskControllerApiAxiosParamCreator(configuration)
+export const BusinessTripDecisionControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = BusinessTripDecisionControllerApiAxiosParamCreator(configuration)
     return {
         /**
          * 
          * @param {string} taskId 
-         * @param {BusinessTripRequestDto} businessTripRequestDto 
+         * @param {BusinessTripRequestDetailedDto} businessTripRequestDetailedDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async complete(taskId: string, businessTripRequestDto: BusinessTripRequestDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<boolean>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.complete(taskId, businessTripRequestDto, options);
+        async complete(taskId: string, businessTripRequestDetailedDto: BusinessTripRequestDetailedDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<boolean>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.complete(taskId, businessTripRequestDetailedDto, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TaskControllerApi.complete']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['BusinessTripDecisionControllerApi.complete']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -320,28 +367,28 @@ export const TaskControllerApiFp = function(configuration?: Configuration) {
         async load(taskId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FormDataDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.load(taskId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['TaskControllerApi.load']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['BusinessTripDecisionControllerApi.load']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
 
 /**
- * TaskControllerApi - factory interface
+ * BusinessTripDecisionControllerApi - factory interface
  * @export
  */
-export const TaskControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = TaskControllerApiFp(configuration)
+export const BusinessTripDecisionControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = BusinessTripDecisionControllerApiFp(configuration)
     return {
         /**
          * 
          * @param {string} taskId 
-         * @param {BusinessTripRequestDto} businessTripRequestDto 
+         * @param {BusinessTripRequestDetailedDto} businessTripRequestDetailedDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        complete(taskId: string, businessTripRequestDto: BusinessTripRequestDto, options?: RawAxiosRequestConfig): AxiosPromise<boolean> {
-            return localVarFp.complete(taskId, businessTripRequestDto, options).then((request) => request(axios, basePath));
+        complete(taskId: string, businessTripRequestDetailedDto: BusinessTripRequestDetailedDto, options?: RawAxiosRequestConfig): AxiosPromise<boolean> {
+            return localVarFp.complete(taskId, businessTripRequestDetailedDto, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -356,22 +403,22 @@ export const TaskControllerApiFactory = function (configuration?: Configuration,
 };
 
 /**
- * TaskControllerApi - object-oriented interface
+ * BusinessTripDecisionControllerApi - object-oriented interface
  * @export
- * @class TaskControllerApi
+ * @class BusinessTripDecisionControllerApi
  * @extends {BaseAPI}
  */
-export class TaskControllerApi extends BaseAPI {
+export class BusinessTripDecisionControllerApi extends BaseAPI {
     /**
      * 
      * @param {string} taskId 
-     * @param {BusinessTripRequestDto} businessTripRequestDto 
+     * @param {BusinessTripRequestDetailedDto} businessTripRequestDetailedDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TaskControllerApi
+     * @memberof BusinessTripDecisionControllerApi
      */
-    public complete(taskId: string, businessTripRequestDto: BusinessTripRequestDto, options?: RawAxiosRequestConfig) {
-        return TaskControllerApiFp(this.configuration).complete(taskId, businessTripRequestDto, options).then((request) => request(this.axios, this.basePath));
+    public complete(taskId: string, businessTripRequestDetailedDto: BusinessTripRequestDetailedDto, options?: RawAxiosRequestConfig) {
+        return BusinessTripDecisionControllerApiFp(this.configuration).complete(taskId, businessTripRequestDetailedDto, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -379,10 +426,116 @@ export class TaskControllerApi extends BaseAPI {
      * @param {string} taskId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TaskControllerApi
+     * @memberof BusinessTripDecisionControllerApi
      */
     public load(taskId: string, options?: RawAxiosRequestConfig) {
-        return TaskControllerApiFp(this.configuration).load(taskId, options).then((request) => request(this.axios, this.basePath));
+        return BusinessTripDecisionControllerApiFp(this.configuration).load(taskId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * BusinessTripRequestControllerApi - axios parameter creator
+ * @export
+ */
+export const BusinessTripRequestControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        startProcess1: async (body: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('startProcess1', 'body', body)
+            const localVarPath = `/rest/process/start`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'text/plain';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * BusinessTripRequestControllerApi - functional programming interface
+ * @export
+ */
+export const BusinessTripRequestControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = BusinessTripRequestControllerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async startProcess1(body: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.startProcess1(body, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BusinessTripRequestControllerApi.startProcess1']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * BusinessTripRequestControllerApi - factory interface
+ * @export
+ */
+export const BusinessTripRequestControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = BusinessTripRequestControllerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        startProcess1(body: string, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.startProcess1(body, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * BusinessTripRequestControllerApi - object-oriented interface
+ * @export
+ * @class BusinessTripRequestControllerApi
+ * @extends {BaseAPI}
+ */
+export class BusinessTripRequestControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} body 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BusinessTripRequestControllerApi
+     */
+    public startProcess1(body: string, options?: RawAxiosRequestConfig) {
+        return BusinessTripRequestControllerApiFp(this.configuration).startProcess1(body, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
