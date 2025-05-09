@@ -1,15 +1,8 @@
 ### POST Start Process
 POST http://127.0.0.1:8081/rest/process/start
-Content-Type: application/json
+Content-Type: text/plain
 
-{
-  "name": "Peter Heinemann",
-  "email": "peter.heinemann@miragon.io",
-  "dateFrom": "2025-01-01",
-  "dateTo": "2025-02-01",
-  "cost": 2000,
-  "destination": "Hamburg"
-}
+\"{\"salutation\": \"Mr\",\"title\": \"Dr\",\"firstName\": \"John\",\"lastName\": \"Doe\",\"mail\": \"john.doe@example.com\",\"iban\": \"DE89370400440532013000\",\"tripType\": \"Business\",\"comment\": \"Annual conference attendance\",\"startPoint\": \"Berlin\",\"startDate\": \"2023-10-15\",\"startTime\": \"09:00:00\",\"address\": {\"street\": \"Example Street 123\",\"city\": \"Berlin\",\"zipCode\": \"10115},\"destinations\": [{\"city\": \"Munich\",\"date\": \"2023-10-16\",\"time\": \"14:30:00\"},{\"city\": \"Frankfurt\",\"date\": \"2023-10-17\",\"time\": \"10:00:00\"}],\"finalDestination\": {\"city\": \"Berlin\",\"date\": \"2023-10-18\",\"time\": \"18:00:00\"}}\"
 
 ### GET Form Data
 @taskId = 6755399517262613

@@ -1,11 +1,11 @@
 package io.miragon.example.formcentric.adapter.`in`.rest
 
+import io.miragon.example.formcentric.adapter.`in`.rest.model.BusinessTripRequestDetailedDto
 import io.miragon.example.formcentric.adapter.`in`.rest.model.BusinessTripRequestDto
 import io.miragon.example.formcentric.adapter.`in`.rest.model.FormDataDto
 import io.miragon.example.formcentric.application.port.`in`.BusinessTripDecisionUseCase
 import io.miragon.example.formcentric.application.port.`in`.GetFormDataUseCase
 import io.miragon.example.formcentric.application.port.`in`.TaskListUseCase
-import io.miragon.example.formcentric.domain.BusinessTripRequest
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -26,15 +26,31 @@ class BusinessTripDecisionController(
                 FormDataDto(
                     schema = form.schema,
                     uiSchema = form.uiSchema,
-                    data = BusinessTripRequestDto(
-                        name = data.name,
-                        email = data.email,
-                        dateFrom = data.dateFrom,
-                        dateTo = data.dateTo,
-                        cost = data.cost,
-                        destination = data.destination,
-                        approval = false,
-                        comment = ""
+                    data = BusinessTripRequestDetailedDto(
+                        salutation = data.salutation ?: "",
+                        title = data.title ?: "",
+                        firstName = data.firstname,
+                        lastName = data.lastname,
+                        mail = data.mail,
+                        iban = data.iban ?: "",
+                        tripType = data.tripType ?: "",
+                        comment = data.comment ?: "",
+                        startPoint = data.startPoint ?: "",
+                        startDate = data.startDate,
+                        startTime = null,
+                        address = null,
+                        destinations = data.destinations?.map { destination ->
+                            BusinessTripRequestDetailedDto.Destination(
+                                city = destination.city,
+                                date = destination.date,
+                                time = null
+                            )
+                        } ?: emptyList(),
+                        finalDestination = BusinessTripRequestDetailedDto.Destination(
+                            city = data.finalDestination.city,
+                            date = data.finalDestination.date,
+                            time = null
+                        )
                     )
                 )
             )
@@ -48,16 +64,7 @@ class BusinessTripDecisionController(
         return try {
             val result = businessTripDecisionUseCase.decide(
                 taskId,
-                BusinessTripRequest(
-                    name = request.name,
-                    email = request.email,
-                    dateFrom = request.dateFrom,
-                    dateTo = request.dateTo,
-                    cost = request.cost,
-                    destination = request.destination,
-                    approval = request.approval,
-                    comment = request.comment,
-                )
+                approval = request.approval,
             )
             taskListUseCase.completeTask(taskId)
             ResponseEntity.ok(result)

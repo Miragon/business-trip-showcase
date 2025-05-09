@@ -12,24 +12,6 @@
             "description": "The email of the approver.",
             "format": "email"
         },
-        "dateTo": {
-            "type": "string",
-            "title": "Bis",
-            "format": "date"
-        },
-        "dateFrom": {
-            "type": "string",
-            "title": "Von",
-            "format": "date"
-        },
-        "cost": {
-            "type": "integer",
-            "title": "Kosten"
-        },
-        "destination": {
-            "type": "string",
-            "title": "Ziel"
-        },
         "comment": {
             "type": "string",
             "title": "Kommentar"
@@ -37,6 +19,44 @@
         "approval": {
             "type": "boolean",
             "title": "Genehmigung"
+        },
+        "salutation": {
+            "type": "string",
+            "title": "Anrede"
+        },
+        "title": {
+            "type": "string",
+            "title": "Title"
+        },
+        "iban": {
+            "type": "string",
+            "title": "IBAN"
+        },
+        "tripType": {
+            "type": "string",
+            "title": "Art der Reise"
+        },
+        "startPoint": {
+            "type": "string",
+            "title": "Startpunkt"
+        },
+        "startDate": {
+            "type": "string",
+            "title": "Startdatum",
+            "format": "date"
+        },
+        "destinations": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/destination"
+            }
+        },
+        "approvalComment": {
+            "type": "string",
+            "title": "Kommentar"
+        },
+        "finalDestination": {
+            "$ref": "#/$defs/destination"
         }
     },
     "required": [
@@ -53,5 +73,21 @@
         "required": [
             "comment"
         ]
+    },
+    "$defs": {
+        "destination": {
+            "type": "object",
+            "properties": {
+                "city": {
+                    "type": "string",
+                    "title": "Ort"
+                },
+                "date": {
+                    "type": "string",
+                    "title": "Datum",
+                    "format": "date"
+                }
+            }
+        }
     }
 }

@@ -13,24 +13,6 @@
         "description": "The email of the approver.",
         "format": "email"
       },
-      "dateTo": {
-        "type": "string",
-        "title": "Bis",
-        "format": "date"
-      },
-      "dateFrom": {
-        "type": "string",
-        "title": "Von",
-        "format": "date"
-      },
-      "cost": {
-        "type": "integer",
-        "title": "Kosten"
-      },
-      "destination": {
-        "type": "string",
-        "title": "Ziel"
-      },
       "comment": {
         "type": "string",
         "title": "Kommentar"
@@ -38,6 +20,44 @@
       "approval": {
         "type": "boolean",
         "title": "Genehmigung"
+      },
+      "salutation": {
+        "type": "string",
+        "title": "Anrede"
+      },
+      "title": {
+        "type": "string",
+        "title": "Title"
+      },
+      "iban": {
+        "type": "string",
+        "title": "IBAN"
+      },
+      "tripType": {
+        "type": "string",
+        "title": "Art der Reise"
+      },
+      "startPoint": {
+        "type": "string",
+        "title": "Startpunkt"
+      },
+      "startDate": {
+        "type": "string",
+        "title": "Startdatum",
+        "format": "date"
+      },
+      "destinations": {
+        "type": "array",
+        "items": {
+          "$ref": "#/$defs/destination"
+        }
+      },
+      "approvalComment": {
+        "type": "string",
+        "title": "Kommentar"
+      },
+      "finalDestination": {
+        "$ref": "#/$defs/destination"
       }
     },
     "required": [
@@ -54,18 +74,47 @@
       "required": [
         "comment"
       ]
+    },
+    "$defs": {
+      "destination": {
+        "type": "object",
+        "properties": {
+          "city": {
+            "type": "string",
+            "title": "Ort"
+          },
+          "date": {
+            "type": "string",
+            "title": "Datum",
+            "format": "date"
+          }
+        }
+      }
     }
   },
   "uischema": {
     "type": "VerticalLayout",
     "elements": [
       {
-        "type": "Control",
-        "scope": "#/properties/name",
-        "label": "Name",
-        "options": {
-          "readonly": true
-        }
+        "type": "HorizontalLayout",
+        "elements": [
+          {
+            "type": "Control",
+            "scope": "#/properties/salutation"
+          },
+          {
+            "type": "Control",
+            "scope": "#/properties/title"
+          },
+          {
+            "type": "Control",
+            "scope": "#/properties/name",
+            "label": "Name",
+            "options": {
+              "readonly": true
+            }
+          }
+        ]
       },
       {
         "type": "Control",
@@ -76,46 +125,25 @@
         }
       },
       {
+        "type": "Control",
+        "scope": "#/properties/iban"
+      },
+      {
         "type": "HorizontalLayout",
         "elements": [
           {
             "type": "Control",
-            "scope": "#/properties/dateFrom",
-            "label": "Von",
-            "options": {
-              "readonly": true
-            }
+            "scope": "#/properties/tripType"
           },
           {
             "type": "Control",
-            "scope": "#/properties/dateTo",
-            "label": "Bis",
-            "options": {
-              "readonly": true
-            }
+            "scope": "#/properties/startPoint"
+          },
+          {
+            "type": "Control",
+            "scope": "#/properties/startDate"
           }
         ]
-      },
-      {
-        "type": "Control",
-        "scope": "#/properties/cost",
-        "label": "Kosten",
-        "options": {
-          "readonly": true
-        }
-      },
-      {
-        "type": "Control",
-        "scope": "#/properties/destination",
-        "label": "Ziel",
-        "options": {
-          "readonly": true
-        }
-      },
-      {
-        "type": "Control",
-        "scope": "#/properties/approval",
-        "label": "Genehmigung"
       },
       {
         "type": "Control",
@@ -130,6 +158,23 @@
             }
           }
         }
+      },
+      {
+        "type": "Control",
+        "scope": "#/properties/destinations"
+      },
+      {
+        "type": "Control",
+        "scope": "#/properties/finalDestination"
+      },
+      {
+        "type": "Control",
+        "scope": "#/properties/approval",
+        "label": "Genehmigung"
+      },
+      {
+        "type": "Control",
+        "scope": "#/properties/approvalComment"
       }
     ]
   }

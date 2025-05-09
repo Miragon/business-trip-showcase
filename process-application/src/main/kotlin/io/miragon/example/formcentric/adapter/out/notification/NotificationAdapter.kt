@@ -14,13 +14,13 @@ class NotificationAdapter(
 
     private val log = KotlinLogging.logger {}
 
-    override fun sendToReviewer(link: String): String {
+    override fun sendToReviewer(link: String, email: Email): String {
         log.info("[NOTIFICATION] Sending link $link to reviewer")
         var transactionId = ""
         runBlocking {
             transactionId = novuClient.trigger(
                 link = link,
-                chat = true,
+                email = email
             ) ?: ""
         }
         return transactionId

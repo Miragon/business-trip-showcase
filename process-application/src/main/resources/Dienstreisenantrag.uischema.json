@@ -2,62 +2,54 @@
     "type": "VerticalLayout",
     "elements": [
         {
-            "type": "Control",
-            "scope": "#/properties/name",
-            "label": "Name",
-            "options": {
-                "readonly": false
-            }
-        },
-        {
-            "type": "Control",
-            "scope": "#/properties/email",
-            "label": "Email",
-            "options": {
-                "readonly": false
-            }
-        },
-        {
             "type": "HorizontalLayout",
             "elements": [
                 {
                     "type": "Control",
-                    "scope": "#/properties/dateFrom",
-                    "label": "Von",
-                    "options": {
-                        "readonly": false
-                    }
+                    "scope": "#/properties/salutation"
                 },
                 {
                     "type": "Control",
-                    "scope": "#/properties/dateTo",
-                    "label": "Bis",
+                    "scope": "#/properties/title"
+                },
+                {
+                    "type": "Control",
+                    "scope": "#/properties/name",
+                    "label": "Name",
                     "options": {
-                        "readonly": false
+                        "readonly": true
                     }
                 }
             ]
         },
         {
             "type": "Control",
-            "scope": "#/properties/cost",
-            "label": "Kosten",
+            "scope": "#/properties/email",
+            "label": "Email",
             "options": {
-                "readonly": false
+                "readonly": true
             }
         },
         {
             "type": "Control",
-            "scope": "#/properties/destination",
-            "label": "Ziel",
-            "options": {
-                "readonly": false
-            }
+            "scope": "#/properties/iban"
         },
         {
-            "type": "Control",
-            "scope": "#/properties/approval",
-            "label": "Genehmigung"
+            "type": "HorizontalLayout",
+            "elements": [
+                {
+                    "type": "Control",
+                    "scope": "#/properties/tripType"
+                },
+                {
+                    "type": "Control",
+                    "scope": "#/properties/startPoint"
+                },
+                {
+                    "type": "Control",
+                    "scope": "#/properties/startDate"
+                }
+            ]
         },
         {
             "type": "Control",
@@ -72,6 +64,23 @@
                     }
                 }
             }
+        },
+        {
+            "type": "Control",
+            "scope": "#/properties/destinations"
+        },
+        {
+            "type": "Control",
+            "scope": "#/properties/finalDestination"
+        },
+        {
+            "type": "Control",
+            "scope": "#/properties/approval",
+            "label": "Genehmigung"
+        },
+        {
+            "type": "Control",
+            "scope": "#/properties/approvalComment"
         }
     ]
 }

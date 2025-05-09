@@ -2,6 +2,7 @@ package io.miragon.example.formcentric.adapter.`in`.rest
 
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import io.miragon.example.formcentric.adapter.`in`.rest.model.BusinessTripRequestDetailedDto
 import io.miragon.example.formcentric.adapter.`in`.rest.model.BusinessTripRequestDto
 import io.miragon.example.formcentric.application.port.`in`.BusinessTripRequestUseCase
 import io.miragon.example.formcentric.domain.BusinessTripRequest
@@ -20,21 +21,20 @@ class BusinessTripRequestController(
 ) {
     private val log = KotlinLogging.logger {}
 
-    private var requestHash = ""
-
     @PostMapping("/start", consumes = [MediaType.APPLICATION_JSON_VALUE])
     fun startProcess(@RequestBody request: BusinessTripRequestDto): ResponseEntity<Unit> {
         log.info { "[${this::class.simpleName}] Request received" }
         return try {
             businessTripRequestUseCase.request(
                 BusinessTripRequest(
-                    name = request.name,
-                    email = request.email,
-                    dateFrom = request.dateFrom,
-                    dateTo = request.dateTo,
-                    cost = request.cost,
-                    destination = request.destination,
-                    approval = false
+                    firstname = request.name.split(" ").first(),
+                    lastname = request.name.split(" ").last(),
+                    mail = request.email,
+                    startDate = request.dateFrom,
+                    finalDestination = BusinessTripRequest.Destination(
+                        city = request.destination,
+                        date = request.dateTo
+                    ),
                 )
             )
             ResponseEntity.ok().build()
@@ -47,27 +47,39 @@ class BusinessTripRequestController(
     @PostMapping("/start", consumes = [MediaType.TEXT_PLAIN_VALUE])
     fun startProcess(@RequestBody body: String): ResponseEntity<Unit> {
         log.info { "[${this::class.simpleName}] Request received" }
-
-        val rh = body.hashCode().toString()
-        if (this.requestHash == rh) {
-            log.info { "[${this::class.simpleName}] Duplicate request received" }
-            return ResponseEntity.ok().build()
-        }
-
-        this.requestHash = rh
-
         return try {
             val mapper = jacksonObjectMapper().registerModule(JavaTimeModule())
-            val dto = mapper.readValue(body, BusinessTripRequestDto::class.java)
+            val dto = mapper.readValue(body, BusinessTripRequestDetailedDto::class.java)
             businessTripRequestUseCase.request(
                 BusinessTripRequest(
-                    name = dto.name,
-                    email = dto.email,
-                    dateFrom = dto.dateFrom,
-                    dateTo = dto.dateTo,
-                    cost = dto.cost,
-                    destination = dto.destination,
-                    approval = false
+                    salutation = dto.salutation,
+                    title = dto.title,
+                    firstname = dto.firstName,
+                    lastname = dto.lastName,
+                    mail = dto.mail,
+                    iban = dto.iban,
+                    tripType = dto.tripType,
+                    comment = dto.comment,
+                    startPoint = dto.startPoint,
+                    startDate = dto.startDate,
+                    startTime = dto.startTime,
+                    address = BusinessTripRequest.Address(
+                        street = dto.address?.street ?: "",
+                        zipCode = dto.address?.zipCode ?: "",
+                        city = dto.address?.city ?: "",
+                    ),
+                    destinations = dto.destinations.map { destination ->
+                        BusinessTripRequest.Destination(
+                            city = destination.city,
+                            date = destination.date,
+                            time = destination.time,
+                        )
+                    },
+                    finalDestination = BusinessTripRequest.Destination(
+                        city = dto.finalDestination.city,
+                        date = dto.finalDestination.date,
+                        time = dto.finalDestination.time,
+                    )
                 )
             )
             ResponseEntity.ok().build()

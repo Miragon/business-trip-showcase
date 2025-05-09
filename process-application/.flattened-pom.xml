@@ -9,14 +9,29 @@
   </parent>
   <artifactId>process-application</artifactId>
   <version>1.0-SNAPSHOT</version>
+  <properties>
+    <process.engine.api.version>1.1</process.engine.api.version>
+    <camunda.version>8.7.1</camunda.version>
+    <process.engine.c8.version>2025.04.1</process.engine.c8.version>
+    <process.engine.worker.version>0.3.0</process.engine.worker.version>
+    <camunda.tasklist.version>8.7.0</camunda.tasklist.version>
+    <kotlin.jackson.version>2.18.3</kotlin.jackson.version>
+    <kotlin.logging.version>3.0.5</kotlin.logging.version>
+  </properties>
   <dependencies>
     <dependency>
       <groupId>com.fasterxml.jackson.module</groupId>
       <artifactId>jackson-module-kotlin</artifactId>
+      <version>${kotlin.jackson.version}</version>
     </dependency>
     <dependency>
       <groupId>io.github.microutils</groupId>
       <artifactId>kotlin-logging-jvm</artifactId>
+      <version>${kotlin.logging.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jetbrains.kotlinx</groupId>
+      <artifactId>kotlinx-coroutines-core</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -27,29 +42,55 @@
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>org.junit.vintage</groupId>
+          <artifactId>junit-vintage-engine</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
       <groupId>io.camunda</groupId>
       <artifactId>spring-boot-starter-camunda-sdk</artifactId>
+      <version>${camunda.version}</version>
     </dependency>
     <dependency>
       <groupId>io.camunda</groupId>
       <artifactId>camunda-tasklist-client-java</artifactId>
+      <version>${camunda.tasklist.version}</version>
     </dependency>
     <dependency>
       <groupId>dev.bpm-crafters.process-engine-api</groupId>
       <artifactId>process-engine-api</artifactId>
+      <version>${process.engine.api.version}</version>
     </dependency>
     <dependency>
       <groupId>dev.bpm-crafters.process-engine-api</groupId>
       <artifactId>process-engine-api-impl</artifactId>
+      <version>${process.engine.api.version}</version>
     </dependency>
     <dependency>
       <groupId>dev.bpm-crafters.process-engine-adapters</groupId>
       <artifactId>process-engine-adapter-camunda-platform-c8-spring-boot-starter</artifactId>
-      <version>2025.04.1</version>
+      <version>${process.engine.c8.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>dev.bpm-crafters.process-engine-worker</groupId>
+      <artifactId>process-engine-worker-spring-boot-starter</artifactId>
+      <version>${process.engine.worker.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springdoc</groupId>
       <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+      <version>2.5.0</version>
+    </dependency>
+    <dependency>
+      <groupId>co.novu</groupId>
+      <artifactId>novu-kotlin</artifactId>
+      <version>1.2.0</version>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
@@ -67,6 +108,11 @@
       <groupId>org.mockito</groupId>
       <artifactId>mockito-junit-jupiter</artifactId>
       <version>5.2.0</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jetbrains.kotlin</groupId>
+      <artifactId>kotlin-test</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>

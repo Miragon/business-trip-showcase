@@ -33,9 +33,9 @@ class NovuClient(
 
     fun cleanUp() = runBlocking {
         // delete subscriber
-        // deleteSubscriber()
+        deleteSubscriber()
         // delete ms-teams integration
-        // deleteMsTeamsIntegration()
+        deleteMsTeamsIntegration()
         // delete workflow
     }
 
