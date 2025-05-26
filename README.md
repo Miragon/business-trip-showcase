@@ -1,4 +1,4 @@
-# Formcentric Showcase
+# Business Trip Showcase
 
 ## Getting started
 
